@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: myapp-frontend:latest
+    container_name: workshop-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
