@@ -12,8 +12,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
-                stage('Build Image') {
+        stages('Build Docker Images') {
                     steps {
                         dir('./') {
                             echo '--- Building Docker Image ---'
@@ -22,7 +21,6 @@ pipeline {
                             }
                         }
                     }
-                }
         }
 
         stage('Deploy (Simulation)') {
