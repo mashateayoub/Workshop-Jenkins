@@ -12,9 +12,9 @@ pipeline {
             }
         }
 
-        stages('Build Docker Images') {
-                    steps {
-                        dir('./') {
+        stage('Build Docker Images') {
+            steps {
+                dir('./') {
                             echo '--- Building Docker Image ---'
                             script {
                                 def frontendImage = docker.build('myapp-frontend:latest')
