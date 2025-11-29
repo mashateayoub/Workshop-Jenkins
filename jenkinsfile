@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 20' 
+        nodejs 'NodeJS 20'
     }
 
     stages {
@@ -14,26 +14,18 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                dir('./') {
-                            echo '--- Building Docker Image ---'
-                            script {
-                                def frontendImage = docker.build('myapp-frontend:latest')
-                            }
-                        }
-                    }
+                echo '--- Building Docker Image ---'
+                script {
+                    docker.build('myapp-frontend:latest')
+                }
+            }
         }
 
         stage('Deploy (Simulation)') {
             steps {
                 echo '--- Deploying services with Docker Compose ---'
-                // Dans un vrai scénario, vous vous connecteriez à un serveur distant
-                // et lanceriez docker-compose up. Ici, on simule.
-                // Assurez-vous d'avoir un docker-compose.yml à la racine.
                 sh 'docker compose up -d'
-                
-                // Attendre quelques secondes pour que les services démarrent
                 sleep 10
-                
                 echo '--- Deployment Simulation Complete ---'
             }
         }
@@ -41,17 +33,14 @@ pipeline {
 
     post {
         always {
-            // Nettoyer l'environnement après le build
             echo '--- Cleaning up ---'
             sh 'docker compose down'
         }
         success {
             echo 'Pipeline Succeeded!'
-            // Envoyer une notification de succès (ex: Slack, email)
         }
         failure {
             echo 'Pipeline Failed!'
-            // Envoyer une notification d'échec
         }
     }
 }
