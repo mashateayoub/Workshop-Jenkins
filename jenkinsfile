@@ -29,7 +29,7 @@ pipeline {
                 // Dans un vrai scénario, vous vous connecteriez à un serveur distant
                 // et lanceriez docker-compose up. Ici, on simule.
                 // Assurez-vous d'avoir un docker-compose.yml à la racine.
-                sh 'docker-compose up -d'
+                sh 'docker compose up -d'
                 
                 // Attendre quelques secondes pour que les services démarrent
                 sleep 10
@@ -43,7 +43,7 @@ pipeline {
         always {
             // Nettoyer l'environnement après le build
             echo '--- Cleaning up ---'
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
         success {
             echo 'Pipeline Succeeded!'
