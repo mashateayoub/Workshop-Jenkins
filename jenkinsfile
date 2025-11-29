@@ -6,6 +6,15 @@ pipeline {
     }
 
     stages {
+
+        stage('Check Docker Version') {
+            steps {
+                sh '''
+                    docker version
+                    docker-compose version
+                '''
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -24,7 +33,7 @@ pipeline {
         stage('Deploy (Simulation)') {
             steps {
                 echo '--- Deploying services with Docker Compose ---'
-                sh 'docker compose up -d'
+                sh 'docker-compose up -d'
                 sleep 10
                 echo '--- Deployment Simulation Complete ---'
             }
@@ -34,7 +43,7 @@ pipeline {
     post {
         always {
             echo '--- Cleaning up ---'
-            sh 'docker compose down'
+            sh 'docker-compose down'
         }
         success {
             echo 'Pipeline Succeeded!'
